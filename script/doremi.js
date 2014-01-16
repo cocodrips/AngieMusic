@@ -3,12 +3,15 @@
   var changeText, char2note, createNote, stopRing;
 
   $(function() {
+    var fv;
     this.noteLength = 400;
     this.context = new webkitAudioContext();
+    fv = new FeelingValue();
     return $("#send-text").on('click', function() {
       var text;
       text = $("#contents").val();
-      return changeText(text);
+      console.log(text);
+      return fv.calcValueFromString(text);
     });
   });
 

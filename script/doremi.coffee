@@ -2,9 +2,17 @@ $ ->
   @noteLength = 400
   @context = new webkitAudioContext()
 
+  fv = new FeelingValue()
+
   $("#send-text").on 'click', ->
     text = $("#contents").val()
-    changeText(text)
+    console.log text
+    fv.calcValueFromString(text)
+
+#    changeText(text)
+
+
+
 
 changeText = (text)->
   long = new RegExp("[-ー]")
