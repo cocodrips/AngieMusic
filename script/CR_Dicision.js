@@ -1,7 +1,7 @@
 $(function(){
 	feeling_value = {
-        plus: [7, 0, 0, 1, 2, 0, 0],
-        minus: [1, 1, 0, 0, 2, 2, 1]
+        plus: [0, 1, 0, 0, 0, 0, 0],
+        minus: [8, 2, 0, 1, 2, 0, 0]
       };
 
 	var chord = chord_dicision(feeling_value.plus[0],feeling_value.minus[0],feeling_value.plus[1],feeling_value.minus[1],feeling_value.plus[2],feeling_value.minus[2],feeling_value.plus[3],feeling_value.minus[3]);
@@ -36,16 +36,16 @@ var chord_dicision = function(p_akauri,m_akarui,p_tanosii,m_tanosii,p_keikai,m_k
 }
 
 //リズム進行の決定
-var rhythm_dicision = function(p_akauri,m_hayai,p_karui,m_karui,p_hade,m_hade){
-	var hayai_val = hayai(p_akauri,m_hayai);
+var rhythm_dicision = function(p_karui,m_karui,p_hade,m_hade,p_hayai,m_hayai){
 	var karui_val = karui(p_karui,m_karui);
 	var hade_val = hade(p_hade,m_hade);
+  var hayai_val = hayai(p_hayai,m_hayai);
 
 	var rhythm_D = [];
 
 	//3次元空間での距離を算出
 	for (var i=0 ; i<rhythm.length ; i++){
-		rhythm_D[i] = Math.sqrt(Math.pow((rhythm[i][0]-hayai_val),2)+Math.pow((rhythm[i][1]-karui_val),2)+Math.pow((rhythm[i][2]-hade_val),2));
+		rhythm_D[i] = Math.sqrt(Math.pow((rhythm[i][1]-karui_val),2)+Math.pow((rhythm[i][2]-hade_val),2)+Math.pow((rhythm[i][0]-hayai_val),2));
 		console.log(rhythm_D[i]);
 	}
 
@@ -118,6 +118,7 @@ var chord = [
     [-11,-4,-5,-5]
   ];
 
+//速い、軽い、派手
   var rhythm = [
   	[-7,-1,-1],
   	[1,-2,-3],
