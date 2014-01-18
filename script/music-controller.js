@@ -29,10 +29,26 @@ function finishLoad(){
     playMusic();
 }
 
+var fuzz=audioctx.createScriptProcessor(1024,1,1);
+fuzz.onaudioprocess=function(event){
+  var sin=event.inputBuffer.getChannelData(0);
+  var sout=event.outputBuffer.getChannelData(0);
+  var limit=0.8;
+//  console.log('わあああ');s
+   for(var i=0;i<sin.length;i++){
+    var sig=sin[i]*6;
+    if(sig>limit)sig=limit;
+    if(sig<-limit)sig=limit;
+    sout[i]=sig;
+   }
+};
+
+fuzz.connect(audioctx.destination);
+
 function playSound(audioctx,buffer,time) {
     var src = audioctx.createBufferSource();
     src.buffer = buffer;
-    src.connect(audioctx.destination);
+    src.connect(fuzz);
     src.noteOn(time);
 }
 
@@ -42,6 +58,10 @@ function playMusic(){
         playSound(audioctx,chordbuffer,0);
     }
 }
+
+
+
+
 
 function LoadRhythmSample(ctx, url) {
     var req = new XMLHttpRequest();
