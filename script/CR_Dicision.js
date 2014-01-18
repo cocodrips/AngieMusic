@@ -1,17 +1,22 @@
+if(typeof(webkitAudioContext)!=="undefined"){
+    var audioctx = new webkitAudioContext();
+}else if(typeof(AudioContext)!=="undefined"){
+    var audioctx = new AudioContext();
+}
+
 $(function(){
   $("#send-text").on("click", function(){
     var feeling_value = FeelingValue.prototype.calcValueFromString($("#contents").val());
 
-  /*	feeling_value = {
-          plus: [0, 1, 0, 0, 0, 0, 0],
-          minus: [8, 2, 0, 1, 2, 0, 0]
-        };*/
-
+    //コードが決まったよ
   	var chord = chord_dicision(feeling_value.plus[0],feeling_value.minus[0],feeling_value.plus[1],feeling_value.minus[1],feeling_value.plus[2],feeling_value.minus[2],feeling_value.plus[3],feeling_value.minus[3]);
   	console.log(chord);
 
-  	var rhythm = rhythm_dicision(feeling_value.plus[4],feeling_value.minus[4],feeling_value.plus[5],feeling_value.minus[5],feeling_value.plus[6],feeling_value.minus[6]);
-  	console.log(rhythm);
+    //リズムがきまったよ
+    var rhythm = rhythm_dicision(feeling_value.plus[4],feeling_value.minus[4],feeling_value.plus[5],feeling_value.minus[5],feeling_value.plus[6],feeling_value.minus[6]);
+    console.log(rhythm);
+
+
   })
 });
 
