@@ -1,14 +1,18 @@
 $(function(){
-	feeling_value = {
-        plus: [0, 1, 0, 0, 0, 0, 0],
-        minus: [8, 2, 0, 1, 2, 0, 0]
-      };
+  $("#send-text").on("click", function(){
+    var feeling_value = FeelingValue.prototype.calcValueFromString($("#contents").val());
 
-	var chord = chord_dicision(feeling_value.plus[0],feeling_value.minus[0],feeling_value.plus[1],feeling_value.minus[1],feeling_value.plus[2],feeling_value.minus[2],feeling_value.plus[3],feeling_value.minus[3]);
-	console.log(chord);
+  /*	feeling_value = {
+          plus: [0, 1, 0, 0, 0, 0, 0],
+          minus: [8, 2, 0, 1, 2, 0, 0]
+        };*/
 
-	var rhythm = rhythm_dicision(feeling_value.plus[4],feeling_value.minus[4],feeling_value.plus[5],feeling_value.minus[5],feeling_value.plus[6],feeling_value.minus[6]);
-	console.log(rhythm);
+  	var chord = chord_dicision(feeling_value.plus[0],feeling_value.minus[0],feeling_value.plus[1],feeling_value.minus[1],feeling_value.plus[2],feeling_value.minus[2],feeling_value.plus[3],feeling_value.minus[3]);
+  	console.log(chord);
+
+  	var rhythm = rhythm_dicision(feeling_value.plus[4],feeling_value.minus[4],feeling_value.plus[5],feeling_value.minus[5],feeling_value.plus[6],feeling_value.minus[6]);
+  	console.log(rhythm);
+  })
 });
 
 
@@ -24,7 +28,7 @@ var chord_dicision = function(p_akauri,m_akarui,p_tanosii,m_tanosii,p_keikai,m_k
 	//4次元空間での距離を算出
 	for (var i=0 ; i<chord.length ; i++){
 		chord_D[i] = Math.sqrt(Math.pow((chord[i][0]-akarui_val),2)+Math.pow((chord[i][1]-tanosii_val),2)+Math.pow((chord[i][2]-keikai_val),2)+Math.pow((chord[i][3]-genki_val),2));
-		console.log(chord_D[i]);
+		//console.log(chord_D[i]);
 	}
 
 	//距離が一番近いコード進行の番号を出力
@@ -46,7 +50,7 @@ var rhythm_dicision = function(p_karui,m_karui,p_hade,m_hade,p_hayai,m_hayai){
 	//3次元空間での距離を算出
 	for (var i=0 ; i<rhythm.length ; i++){
 		rhythm_D[i] = Math.sqrt(Math.pow((rhythm[i][1]-karui_val),2)+Math.pow((rhythm[i][2]-hade_val),2)+Math.pow((rhythm[i][0]-hayai_val),2));
-		console.log(rhythm_D[i]);
+		//console.log(rhythm_D[i]);
 	}
 
 	//距離が一番近いコード進行の番号を出力
