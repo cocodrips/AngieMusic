@@ -5,6 +5,10 @@
 
     function FeelingValue() {}
 
+    FeelingValue.constructor = function() {
+      return this.filter = 0;
+    };
+
     FeelingValue.prototype.calcValueFromString = function(text) {
       var data, feeling_value, i, samelen, segmenter, v, word, words, _i, _j, _k, _len, _len1;
       segmenter = new TinySegmenter();
@@ -14,8 +18,12 @@
         plus: [0, 0, 0, 0, 0, 0, 0],
         minus: [0, 0, 0, 0, 0, 0, 0]
       };
+      this.filter = 0;
       for (_i = 0, _len = words.length; _i < _len; _i++) {
         word = words[_i];
+        if (word.match(/激しい/)) {
+          this.filter = 1;
+        }
         data = feeling[word];
         samelen = allSame(word);
         if (samelen > 0) {
@@ -25,7 +33,6 @@
           continue;
         }
         if (data) {
-          console.log(word);
           for (i = _k = 0, _len1 = data.length; _k < _len1; i = ++_k) {
             v = data[i];
             if (v > 0.0003) {

@@ -1,4 +1,7 @@
 class @FeelingValue
+  @constructor: ()->
+    @filter = 0
+
   calcValueFromString: (text)->
     segmenter = new TinySegmenter()
     words = segmenter.segment(text)
@@ -7,8 +10,10 @@ class @FeelingValue
       plus:[0,0,0,0,0,0,0],
       minus:[0,0,0,0,0,0,0]
     }
-
+    @filter = 0
     for word in words
+      if word.match(/激しい/)
+        @filter = 1
       data = feeling[word]
       samelen = allSame(word)
       if samelen > 0
@@ -17,7 +22,6 @@ class @FeelingValue
         continue
 
       if data
-        console.log word
         for v, i in data
           if v > 0.0003
             feeling_value.plus[i]++
