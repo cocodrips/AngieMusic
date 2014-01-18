@@ -6,9 +6,12 @@ if(typeof(webkitAudioContext)!=="undefined"){
 }
 
 $(function(){
-  var buffer = null;
+  var rhythmbuffer = null;
+  var chordbuffer = null;
+
   console.log(audioctx);
-  LoadSample(audioctx, "./loop_145.wav");
+  LoadRhythmSample(audioctx, "./rhythm1.wav");
+  LoadChordSample(audioctx, "./chord1.wav");
 
   $("#getcontent").on("click", function(){
     playMusic();
@@ -26,21 +29,36 @@ function playSound(audioctx,buffer,time) {
 }
 
 function playMusic(){
-      playSound(audioctx,buffer,0);
-      playSound(audioctx,buffer,3);
+      playSound(audioctx,rhythmbuffer,0);
+      playSound(audioctx,chordbuffer,0);
 }
  
-function LoadSample(ctx, url) {
+function LoadRhythmSample(ctx, url) {
     var req = new XMLHttpRequest();
     req.open("GET", url, true);
     req.responseType = "arraybuffer";
     req.onload = function() {
         if(req.response) {
 //          buffer = ctx.createBuffer(req.response, false);
-            ctx.decodeAudioData(req.response,function(b){buffer=b;},function(){});
+            ctx.decodeAudioData(req.response,function(b){rhythmbuffer=b;},function(){});
         }
         else
-            buffer = ctx.createBuffer(VBArray(req.responseBody).toArray(), false);
+            rhythmbuffer = ctx.createBuffer(VBArray(req.responseBody).toArray(), false);
+    }
+    req.send();
+}
+
+function LoadChordSample(ctx, url) {
+    var req = new XMLHttpRequest();
+    req.open("GET", url, true);
+    req.responseType = "arraybuffer";
+    req.onload = function() {
+        if(req.response) {
+//          buffer = ctx.createBuffer(req.response, false);
+            ctx.decodeAudioData(req.response,function(b){chordbuffer=b;},function(){});
+        }
+        else
+            chordbuffer = ctx.createBuffer(VBArray(req.responseBody).toArray(), false);
     }
     req.send();
 }
