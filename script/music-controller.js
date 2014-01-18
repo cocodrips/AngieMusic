@@ -19,8 +19,9 @@ $(function(){
         didLoad = 0;
         console.log(rhythm_midi_name, chord_midi_name)
 
-        LoadRhythmSample(audioctx, "data/" + rhythm_midi_name);
+
         LoadChordSample(audioctx, "data/" + chord_midi_name);
+        LoadRhythmSample(audioctx, "data/" + rhythm_midi_name);
     })
 });
 
@@ -28,6 +29,21 @@ function finishLoad(){
     didLoad++;
     playMusic();
 }
+
+
+
+var convolver = audioctx.createConvolver();
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "ir.wav", true);
+xhr.responseType = "arraybuffer";
+xhr.onload = function() {
+    audioctx.decodeAudioData(xhr.response,function(buf){ 
+        convolver.buffer = buf;
+    },function(){});
+};
+xhr.send();
+convolver.connect(audioctx.destination);
+
 
 var fuzz=audioctx.createScriptProcessor(1024,1,1);
 fuzz.onaudioprocess=function(event){
@@ -42,13 +58,12 @@ fuzz.onaudioprocess=function(event){
     sout[i]=sig;
    }
 };
-
 fuzz.connect(audioctx.destination);
 
 function playSound(audioctx,buffer,time) {
     var src = audioctx.createBufferSource();
     src.buffer = buffer;
-    src.connect(fuzz);
+    src.connect(convolver);
     src.noteOn(time);
 }
 
