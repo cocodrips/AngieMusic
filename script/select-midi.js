@@ -1,27 +1,10 @@
-//$(function(){
-//  $("#send-text").on("click", function(){
-//    var feeling_value = FeelingValue.prototype.calcValueFromString($("#contents").val());
-//
-//  /*	feeling_value = {
-//          plus: [0, 1, 0, 0, 0, 0, 0],
-//          minus: [8, 2, 0, 1, 2, 0, 0]
-//        };*/
-//
-//  	var chord = chord_dicision(feeling_value.plus[0],feeling_value.minus[0],feeling_value.plus[1],feeling_value.minus[1],feeling_value.plus[2],feeling_value.minus[2],feeling_value.plus[3],feeling_value.minus[3]);
-//  	console.log(chord);
-//
-//  	var rhythm = rhythm_dicision(feeling_value.plus[4],feeling_value.minus[4],feeling_value.plus[5],feeling_value.minus[5],feeling_value.plus[6],feeling_value.minus[6]);
-//  	console.log(rhythm);
-//  })
-//});
-
 
 //コード進行の決定
-var chord_dicision = function(p_akauri,m_akarui,p_tanosii,m_tanosii,p_keikai,m_keikai,p_genki,m_genki){
-	var akarui_val = akarui(p_akauri,m_akarui);
-	var tanosii_val = tanosii(p_tanosii,m_tanosii);
-	var keikai_val = keikai(p_keikai,m_keikai);
-	var genki_val = genki(p_genki,m_genki);
+var chord_dicision = function(feeling_value){
+	var akarui_val = akarui(feeling_value.plus[0], feeling_value.minus[0]);
+	var tanosii_val = tanosii(feeling_value.plus[1], feeling_value.minus[1]);
+	var keikai_val = keikai(feeling_value.plus[2], feeling_value.minus[2]);
+	var genki_val = genki(feeling_value.plus[3], feeling_value.minus[3]);
 
 	var chord_D = [];
 
@@ -40,10 +23,10 @@ var chord_dicision = function(p_akauri,m_akarui,p_tanosii,m_tanosii,p_keikai,m_k
 }
 
 //リズム進行の決定
-var rhythm_dicision = function(p_karui,m_karui,p_hade,m_hade,p_hayai,m_hayai){
-	var karui_val = karui(p_karui,m_karui);
-	var hade_val = hade(p_hade,m_hade);
-  var hayai_val = hayai(p_hayai,m_hayai);
+var rhythm_dicision = function(feeling_value){
+	var karui_val = karui(feeling_value.plus[4], feeling_value.minus[4]);
+	var hade_val = hade(feeling_value.plus[5], feeling_value.minus[5]);
+  var hayai_val = hayai(feeling_value.plus[6], feeling_value.minus[6]);
 
 	var rhythm_D = [];
 

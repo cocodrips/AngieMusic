@@ -13,8 +13,8 @@ $(function(){
         fv = new FeelingValue();
         feeling_value = fv.calcValueFromString(text);
         console.log("feelingvalue:", feeling_value)
-        var rhythm_midi_name = rhythm_dicision(feeling_value.plus[4],feeling_value.minus[4],feeling_value.plus[5],feeling_value.minus[5],feeling_value.plus[6],feeling_value.minus[6]);
-        var chord_midi_name = chord_dicision(feeling_value.plus[0],feeling_value.minus[0],feeling_value.plus[1],feeling_value.minus[1],feeling_value.plus[2],feeling_value.minus[2],feeling_value.plus[3],feeling_value.minus[3]);
+        var rhythm_midi_name = rhythm_dicision(feeling_value);
+        var chord_midi_name = chord_dicision(feeling_value);
 
         didLoad = 0;
         console.log(rhythm_midi_name, chord_midi_name)
@@ -53,8 +53,7 @@ function LoadRhythmSample(ctx, url) {
         if(req.response) {
             ctx.decodeAudioData(req.response,function(b){
                 rhythmbuffer=b;
-                didLoad ++;
-                playMusic();
+                finishLoad()
             },function(){});
         }
         else{
@@ -75,8 +74,7 @@ function LoadChordSample(ctx, url) {
         if(req.response) {
             ctx.decodeAudioData(req.response,function(b){
                 chordbuffer=b;
-                didLoad ++;
-                playMusic();
+                finishLoad()
             },function(){});
         }
         else
